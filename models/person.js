@@ -1,3 +1,5 @@
+console.log("inside peron.js")
+
 const mongoose = require('mongoose')
 
 const url = process.env.MONGODB_URI

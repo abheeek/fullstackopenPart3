@@ -37,9 +37,13 @@ let persons = [
 ]
 
 app.get('/api/persons', (req, res) => {
-  Person.find({}).then(persons => {
-    res.json(persons)
-  })
+  Person.find({})
+    .then(persons => {
+      res.json(persons)
+    })
+    .catch(error => {
+      res.end()
+    })
 })
 
 app.get('/info', (req, res) => {

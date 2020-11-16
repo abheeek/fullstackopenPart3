@@ -42,7 +42,8 @@ app.get('/api/persons', (req, res) => {
       res.json(persons)
     })
     .catch(error => {
-      res.end()
+      console.log(error)
+      res.status(500).end()
     })
 })
 
@@ -55,9 +56,18 @@ app.get('/info', (req, res) => {
 })
 
 app.get('/api/persons/:id', (req, res) => {
-  Person.findById(req.params.id).then(person => {
-    res.json(person)
-  })
+  Person.findById(req.params.id)
+    .then(person => {
+      if (person) {
+        res.json(person)
+      } else {
+        res.status(404).end()
+      }
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(500).end()
+    })
 })
 
 app.delete('/api/persons/:id', (req, res) => {
@@ -80,9 +90,14 @@ app.post('/api/persons', (req, res) => {
     name: body.name,
     number: body.number
   })
-  person.save().then(savedPerson => {
-    res.json(savedPerson)
-  })
+  person.save()
+    .then(savedPerson => {
+      res.json(savedPerson)
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(500).end()
+    })
 })
 
 const PORT = process.env.PORT

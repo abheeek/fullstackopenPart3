@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const url = process.env.MONGODB_URI
+//const url = `mongodb+srv://fullstackopen:fullstackopen123@cluster0.anov5.mongodb.net/phonebook-data?retryWrites=true&w=majority`
 
 console.log('connecting to', url)
 

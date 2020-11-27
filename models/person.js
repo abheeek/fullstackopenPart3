@@ -21,7 +21,7 @@ const personSchema = new mongoose.Schema({
     required: true,
     minlength: 8, 
     validate: [(value) => {
-      let pattern = new RegExp('/^d+$/')
+      let pattern = /^\d+$/
       return pattern.test(value)
     }, 'number can only contain digits'] 
   }

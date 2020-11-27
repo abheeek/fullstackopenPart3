@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
 
-const url = process.env.MONGODB_URI
-//const url = `mongodb+srv://fullstackopen:fullstackopen123@cluster0.anov5.mongodb.net/phonebook-data?retryWrites=true&w=majority`
+//const url = process.env.MONGODB_URI
+const url = `mongodb+srv://fullstackopen:fullstackopen123@cluster0.anov5.mongodb.net/phonebook-data?retryWrites=true&w=majority`
 
 console.log('connecting to', url)
 
@@ -14,9 +15,19 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFind
   })
 
 const personSchema = new mongoose.Schema({
-  name: String,
-  number: String
+  name: { type: String, required: true, unique: true, minlength: 3 },
+  number: { 
+    type: String, 
+    required: true,
+    minlength: 8, 
+    validate: [(value) => {
+      let pattern = new RegExp('/^d+$/')
+      return pattern.test(value)
+    }, 'number can only contain digits'] 
+  }
 })
+
+personSchema.plugin(uniqueValidator)
 
 personSchema.set('toJSON', {
   transform: (document, returnedObject) => {
